@@ -22,7 +22,7 @@ steps:
 
 #Build linex based docker image
 - task: Docker@2
-  displayname: Build and push Docker image to ACR
+  displayName: Build and push Docker image to ACR
   inputs:
     repository: $(imageName)
     command: buildAndPush
