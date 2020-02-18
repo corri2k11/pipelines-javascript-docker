@@ -1,0 +1,31 @@
+# Starter pipeline
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+  imageName: 'pipelinesJavascriptDocker'
+  dockerRegistryServiceConnection: 'corriAcrConnection'
+  DOCKER_BUILDKIT: 1
+
+steps:
+- script: echo Inline script. Hello, world!
+  displayName: 'Run a one-line Hello script'
+
+- script: |
+    echo Multiline script. Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+#Build linex based docker image
+- task: Docker@2
+  displayname: Build and push Docker image to ACR
+  inputs:
+    repository: $(imageName)
+    command: buildAndPush
+    dockerfile: app/Dockerfile
+    containerRegistry: $(dockerRegistryServiceConnection)
+    tags: v1.0
